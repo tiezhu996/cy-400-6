@@ -21,6 +21,15 @@ export const repository = {
   saveNote(note: Record<string, unknown>) {
     return db.prepare('INSERT INTO notes(book_id, title, markdown, tags, updated_at) VALUES(@bookId, @title, @markdown, @tags, @updatedAt)').run({ ...note, tags: JSON.stringify(note.tags ?? []), updatedAt: new Date().toISOString() });
   },
+  getBook(id: number) {
+    return db.prepare('SELECT * FROM books WHERE id = ?').get(id);
+  },
+  listNotesByBook(bookId: number) {
+    return db.prepare('SELECT * FROM notes WHERE book_id = ? ORDER BY updated_at DESC').all(bookId);
+  },
+  listHighlightsByBook(bookId: number) {
+    return db.prepare('SELECT * FROM highlights WHERE book_id = ? ORDER BY id DESC').all(bookId);
+  },
   listHighlights() {
     return db.prepare('SELECT * FROM highlights ORDER BY id DESC').all();
   },

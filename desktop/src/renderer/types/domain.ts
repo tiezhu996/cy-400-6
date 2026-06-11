@@ -8,9 +8,12 @@ declare global {
     readingApi: {
       listBooks(): Promise<Book[]>;
       createBook(book: Book): Promise<unknown>;
+      getBookDetail(id: number): Promise<Book | undefined>;
       listNotes(): Promise<Note[]>;
+      listNotesByBook(bookId: number): Promise<Note[]>;
       saveNote(note: Note): Promise<unknown>;
       listHighlights(): Promise<Highlight[]>;
+      listHighlightsByBook(bookId: number): Promise<Highlight[]>;
       createHighlight(highlight: Highlight): Promise<unknown>;
     };
   }
